@@ -86,7 +86,10 @@ struct H265Encoder
         cctx->gop_size = 12;
         cctx->framerate = (AVRational){ fps, 1 };
 
-        av_opt_set(cctx, "preset", "ultrafast", 0);
+        // priv_data not cctx...
+        // https://ffmpeg.org/doxygen/trunk/doc_2examples_2decoding__encoding_8c-example.html
+        av_opt_set(cctx->priv_data, "preset", "slow", 0);
+        av_opt_set(cctx->priv_data, "crf", "0", 0);
         avcodec_parameters_from_context(stream->codecpar, cctx);
     }
 
